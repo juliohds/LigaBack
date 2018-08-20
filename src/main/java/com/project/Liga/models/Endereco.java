@@ -6,24 +6,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="socio")
-public class Socio {
+@Table(name="endereco")
+public class Endereco {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotBlank
-	private String nome;
+	private String cidade;
+	
+	private String rua;
+	
+	private int numero;
 	
 	@ManyToOne
 	private Startup startup;
-	
-	@ManyToOne
-	private GrandeEmpresa grandeEmpresa;
 
 	public int getId() {
 		return id;
@@ -33,12 +32,28 @@ public class Socio {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getCidade() {
+		return cidade;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
 	}
 
 	public Startup getStartup() {
@@ -48,7 +63,4 @@ public class Socio {
 	public void setStartup(Startup startup) {
 		this.startup = startup;
 	}
-	
-	
-
 }

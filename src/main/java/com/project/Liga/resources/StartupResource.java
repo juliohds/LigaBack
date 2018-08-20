@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Liga.models.Endereco;
 import com.project.Liga.models.Socio;
 import com.project.Liga.models.Startup;
+import com.project.Liga.repository.EnderecoRepository;
 import com.project.Liga.repository.SocioRepository;
 import com.project.Liga.repository.StartupRepository;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/startup")
 public class StartupResource {
@@ -28,6 +32,8 @@ public class StartupResource {
 	private StartupRepository sr;
 	@Autowired 
 	private SocioRepository sor;
+	@Autowired 
+	private EnderecoRepository er;
 	
 	@GetMapping(produces="application/json")
 	public @ResponseBody Iterable<Startup> listaStartup() {
@@ -49,6 +55,11 @@ public class StartupResource {
 	@PostMapping()
 	public Startup cadastraStartup(@RequestBody @Valid Startup startup) {
 		
+		if(startup.getEndereco() != null) {
+			Endereco end = startup.getEndereco();
+			er.save(end);
+		}
+
 		if(startup.getSocio() != null) {
 			
 			List<Socio> ls = startup.getSocio();
