@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Liga.EnviarEmail;
 import com.project.Liga.models.User;
 import com.project.Liga.repository.UserRepository;
 
@@ -33,6 +34,20 @@ public class UserResource {
 	@PostMapping()
 	public @Valid User cadastraUser(@RequestBody @Valid User user) {
 		return ur.save(user);
+	}
+	
+	@PostMapping(value="/forgot-password")
+	public String enviarEmailDeEsqueciaSenha(@RequestBody User user){
+		
+		EnviarEmail ee = new EnviarEmail();
+		ee.setEmailDestinatario(user.getEmail());
+		User us = ur.findByEmail(user.getEmail());
+		String senha = us.getSenha();
+		ee.setMsg("Email de recuperação de senha"+senha);
+		ee.setAssunto("Recuperação de Senha");
+		ee.enviarGmail();
+		
+		return "ok";
 	}
 	
 	@PostMapping(value="/login")
