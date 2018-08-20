@@ -64,7 +64,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<fork>true</fork>
-					<executable>/usr/lib/jvm/jdk1.8.0-openjdk-amd64/bin/javac</executable>
+					<executable>/usr/lib/jvm/jdk1.8.0-openjdk-amd64</executable>
 				</configuration>
 			</plugin>
 		</plugins>
