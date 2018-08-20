@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Liga.models.Endereco;
+import com.project.Liga.models.Mentor;
 import com.project.Liga.models.Socio;
 import com.project.Liga.models.Startup;
 import com.project.Liga.repository.EnderecoRepository;
+import com.project.Liga.repository.MentorRepository;
 import com.project.Liga.repository.SocioRepository;
 import com.project.Liga.repository.StartupRepository;
 
@@ -34,6 +36,9 @@ public class StartupResource {
 	private SocioRepository sor;
 	@Autowired 
 	private EnderecoRepository er;
+	
+	@Autowired 
+	private MentorRepository mr;
 	
 	@GetMapping(produces="application/json")
 	public @ResponseBody Iterable<Startup> listaStartup() {
@@ -58,6 +63,13 @@ public class StartupResource {
 		if(startup.getEndereco() != null) {
 			Endereco end = startup.getEndereco();
 			er.save(end);
+		}
+		
+		if(startup.getMentor() != null) {
+			Mentor mentor;
+			int id_mentor = startup.getMentor().getId();
+			mentor = mr.findById(id_mentor);
+			mr.save(mentor);
 		}
 
 		if(startup.getSocio() != null) {

@@ -33,7 +33,10 @@ public class Startup {
 	
 	@OneToOne
 	private Endereco endereco;
-		
+	
+	@OneToOne
+	private Mentor mentor;
+	
 	@NotBlank
 	private String telefone;
 	
@@ -87,6 +90,12 @@ public class Startup {
 	}
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+	public Mentor getMentor() {
+		return mentor;
+	}
+	public void setMentor(Mentor mentor) {
+		this.mentor = mentor;
 	}
 	
 	
