@@ -60,6 +60,15 @@ public class UserResource {
 		
 	}
 	
+	@PostMapping(value="/loginFace")
+	public @Valid User loginFace(@RequestBody User user) {
+		
+		String email = user.getEmail();
+		User us = ur.findByEmail(email);
+		return us;
+		
+	}
+	
 	@DeleteMapping()
 	public User deletaUser(@RequestBody User user) {
 		ur.delete(user);
