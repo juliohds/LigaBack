@@ -70,7 +70,7 @@ public class EnviarEmail {
         
         Session s = Session.getDefaultInstance (props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("tecjuliohenrique@gmail.com", "ALTERAR");
+                return new PasswordAuthentication("thedotaplayer1@gmail.com", "j95686235");
             }
         });
         
@@ -78,7 +78,7 @@ public class EnviarEmail {
         //compose message  
         try {
             MimeMessage message = new MimeMessage(s);
-            message.setFrom(new InternetAddress("tecjuliohenrique@gmail.com"));
+            message.setFrom(new InternetAddress("thedotaplayer1@gmail.com"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(this.emailDestinatario));
 
             message.setSubject(this.assunto);
