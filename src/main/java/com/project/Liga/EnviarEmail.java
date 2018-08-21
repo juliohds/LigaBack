@@ -1,14 +1,7 @@
 package com.project.Liga;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.util.Properties;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -56,29 +49,25 @@ public class EnviarEmail {
         boolean retorno = false;
         //Get the session object  
         Properties props = new Properties();
-
-        props.put ("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.debug", "true");
-        props.put("mail.smtp.debug", "true");
-        props.put("mail.mime.charset", "ISO-8859-1");
         props.put("mail.smtp.port", "465");
-        props.put ("mail.smtp.starttls.enable", "true");
-        props.put ("mail.smtp.socketFactory.port", "465");
-        props.put ("mail.smtp.socketFactory.fallback", "false");
-        props.put ("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        
-        Session s = Session.getDefaultInstance (props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("thedotaplayer1@gmail.com", "j95686235");
-            }
-        });
-        
+
+        Session s = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+
+                        return new PasswordAuthentication("tecjuliohenrique@gmail.com", "\\PEC86nmnvnanpmsdadD'RM14052019");//email e senha usuário 
+                    }
+                });
 
         //compose message  
         try {
             MimeMessage message = new MimeMessage(s);
-            message.setFrom(new InternetAddress("thedotaplayer1@gmail.com"));
+            message.setFrom(new InternetAddress("tecjuliohenrique@gmail.com"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(this.emailDestinatario));
 
             message.setSubject(this.assunto);
@@ -96,4 +85,47 @@ public class EnviarEmail {
         return retorno;
     }
     
+    public boolean enviarHotmail()
+    {
+        boolean retorno = false; 
+        Properties props = new Properties();
+            /** Parâmetros de conexão com servidor Hotmail */
+            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.smtp.host", "smtp.live.com");
+            props.put("mail.smtp.socketFactory.port", "587");
+            props.put("mail.smtp.socketFactory.fallback", "false");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.port", "587");
+
+            Session session = Session.getDefaultInstance(props,
+                        new javax.mail.Authenticator() {
+                             protected PasswordAuthentication getPasswordAuthentication() 
+                             {
+                                   return new PasswordAuthentication("ruben.junior.2@hotmail.com", "*******");
+                             }
+                        });
+            /** Ativa Debug para sessão */
+            session.setDebug(true);
+            try {
+
+                  Message message = new MimeMessage(session);
+                  message.setFrom(new InternetAddress("ruben.junior.2@hotmail.com")); //Remetente
+
+                  message.setRecipients(Message.RecipientType.TO, 
+                                    InternetAddress.parse("siedler@gmail.com")); //Destinatário(s)
+                  message.setSubject("Enviando email com JavaMail");//Assunto
+                  message.setText("Enviei este email utilizando JavaMail com minha conta Hotmail!");
+                  /**Método para enviar a mensagem criada*/
+                  Transport.send(message);
+                  System.out.println("Feito!!!");
+                  retorno = true;
+             } catch (MessagingException e) {
+                  throw new RuntimeException(e);
+            }
+            
+            return retorno;
+    
+    }
+
 }
